@@ -934,21 +934,15 @@
     </div>
 
 <script>
-    
+
     function hideLoader() {
         const loader = document.getElementById('loader');
-        if (loader && loader.style.display !== 'none') {
+        if (loader) {
             loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 600); 
+            setTimeout(() => { loader.style.display = 'none'; }, 600);
         }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(hideLoader, 2500); 
-    });
-
+    document.addEventListener('DOMContentLoaded', () => { setTimeout(hideLoader, 1000); });
     window.addEventListener('load', hideLoader);
 
     function filterGallery(category) {
@@ -957,40 +951,23 @@
         btns.forEach(btn => btn.classList.remove('active'));
         if(event && event.target.classList.contains('tab-btn')) event.target.classList.add('active');
         cards.forEach(card => {
-            if (category === 'all' || card.classList.contains(category)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = (category === 'all' || card.classList.contains(category)) ? 'block' : 'none';
         });
     }
 
     function openModal(el) {
-        const modal = document.getElementById('modalView');
-        const img = el.querySelector('img').src;
-        modal.style.display = 'flex';
-        document.getElementById('modalImg').src = img;
+        document.getElementById('modalView').style.display = 'flex';
+        document.getElementById('modalImg').src = el.querySelector('img').src;
         document.getElementById('modalTitle').innerText = el.getAttribute('data-title');
         document.getElementById('modalDesc').innerText = el.getAttribute('data-desc');
     }
-
     function closeModal() { document.getElementById('modalView').style.display = 'none'; }
-
     function toggleChat() {
         let chat = document.getElementById('chatWindow');
         chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
     }
 
-    function sendMsg() {
-        let input = document.getElementById('userInput');
-        let text = input.value.trim().toLowerCase();
-        if (!text) return;
-        
-        let chat = document.getElementById('chatText');
-        chat.innerHTML += `<div class="msg user">${input.value}</div>`;
-        input.value = '';
 
-    
     const botDatabase = [
         { keys: ['привет', 'здравствуй', 'ку', 'хай', 'hello', 'hi'], answer: "Привет! Я цифровой помощник Дениса. Готов ответить на вопросы по фото или просто поболтать!" },
         { keys: ['пока', 'до свидания', 'бб', 'удачи'], answer: "Было приятно пообщаться! Заходите еще, Денис часто обновляет портфолио." },
@@ -1023,7 +1000,7 @@
         { keys: ['дурак', 'тупой', 'идиот', 'глупый'], answer: "Я только учусь... Не ругайтесь, лучше посмотрите красивые фотки." },
         { keys: ['круто', 'классно', 'вау', 'супер', 'молодец'], answer: "Спасибо! Денису будет очень приятно это слышать." },
         { keys: ['котик', 'кошка', 'кот'], answer: "Котики — это мило, но вы видели глаза стрекозы? Вот где настоящий космос!" }
-        { keys: ['кто тебя создал', 'кто создатель', 'создатель'], answer: "Меня и сайт создал @io_qui!" }
+        { keys: ['создал', 'создатель', 'создатель'], answer: "Меня и сайт создал @io_qui!" 
     ];
 
     function sendMsg() {
@@ -1035,10 +1012,13 @@
         chat.innerHTML += `<div class="msg user">${input.value}</div>`;
         input.value = '';
 
+        
         setTimeout(() => {
             let answer = "Интересный вопрос! Напишите лучше Денису в Telegram, он расскажет подробнее."; 
             
+            
             for (let item of botDatabase) {
+               
                 if (item.keys.some(key => text.includes(key))) {
                     answer = item.answer;
                     break; 
@@ -1051,8 +1031,8 @@
     }
 </script>
 
-
 by @io_qui
+
 
 
 
